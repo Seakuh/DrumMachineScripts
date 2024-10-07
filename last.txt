@@ -1,0 +1,30 @@
+kick_amp = 2  # Lautstärke der Kickdrum
+kick_sleep = 0.5  # Wie oft die Kick spielt (Abstand in Sekunden)
+hihat_amp = 1.5  # Lautstärke der Hi-Hats
+hihat_sleep = 0.5  # Schnelligkeit der Hi-Hats
+snare_amp = 2
+snare_sleep = 2  # Die Snare spielt jede zweite Sekunde
+synth_amp = 1.5
+melody_notes = (ring :e3, :g3, :b3, :c4)  # Eine einfache Melodie
+
+live_loop :kick do
+  sample :bd_haus, amp: kick_amp
+  sleep kick_sleep
+end
+
+live_loop :hihats do
+  sample :drum_cymbal_closed, amp: hihat_amp
+  sleep hihat_sleep
+end
+
+live_loop :snare do
+  sleep snare_sleep  # Pause bevor die Snare gespielt wird
+  sample :sn_dolf, amp: snare_amp
+end
+
+use_synth :dsaw
+
+play 52, amp: 2, pan: -0.6, attack: 0.2, decay: 0.5, sustain: 1, release: 2, cutoff: 80, detune: 0.2
+sleep 0.5
+
+play 60, amp: 2, pan: 0.5, attack: 0.2, decay: 0.5, sustain: 1, release: 2, cutoff: 80, detune: 0.2

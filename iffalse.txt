@@ -1,0 +1,85 @@
+# Welcome to Sonic Pi
+
+use_bpm 80  # Adjust BPM to speed up or slow down the entire track
+
+# Define reusable functions to keep the code DRY
+define :play_bass do |note, pan_position|
+  use_synth :tb303
+  play note, release: 0.6, cutoff: 60, res: 0.9, amp: 2, pan: pan_position
+end
+
+define :horse_click do
+  sample :perc_till, amp: 1.2, rate: 1.5  # Click sound
+  sleep 0.25
+  sample :perc_till, amp: 1.2, rate: 1.5
+end
+
+# --- Kick drum pattern ---
+if true  # Set to true to enable the kick drum
+  live_loop :kick do
+    sample :bd_808, amp: 2  # A nice techno kick drum
+    sleep 0.5  # Plays on every beat
+  end
+end
+
+# --- Clap pattern ---
+if false  # Set to true to enable the clap
+  live_loop :clap do
+    sleep 1  # Wait for one beat before starting clap
+    sample :perc_snap, amp: 1.5  # Use a clap sound
+    sleep 1  # Plays on every second beat
+  end
+end
+
+# --- Closed hi-hats pattern ---
+if false  # Set to true to enable the closed hi-hats
+  live_loop :closed_hihat do
+    sleep 0.25  # Hi-hats on every quarter beat
+    sample :drum_cymbal_closed, amp: 0.8, rate: 1.5  # Closed hi-hat
+  end
+end
+
+# --- Deep and wide bassline with dynamic rhythm ---
+if false  # Set to true to enable the bassline
+  live_loop :deep_bassline do
+    play_bass(:e1, -0.5)  # Play on the left side
+    sleep [0.25, 0.5].choose  # Randomize rhythm between quarter and half beats
+    play_bass(:e1, 0.5)  # Play on the right side
+    sleep [0.25, 0.5].choose
+  end
+end
+
+# --- Horse-walk-like click at the end of the measure ---
+if false  # Set to true to enable the horse-walk clicks
+  live_loop :horse_click do
+    sleep 3.5  # Wait until the end of the measure (after 7 beats)
+    horse_click  # Reuse the function for clicks
+    sleep 0.25  # Sleep until the next measure
+  end
+end
+
+# --- Open hi-hat pattern (toggle on/off easily) ---
+if false  # Set to true to enable the open hi-hat sound
+  live_loop :open_hihat do
+    sleep 0.75  # Wait before starting open hi-hats
+    sample :drum_cymbal_open, amp: 0.6, attack: 0.01, sustain: 0.1, release: 0.1  # Open hi-hat
+    sleep 0.25  # Play every 4th beat
+  end
+end
+
+# --- Extra clap or variation (optional) ---
+if false  # Set to true to use this clap loop
+  live_loop :extra_clap do
+    sample :perc_snap, amp: 1.5  # Sample of a clap sound
+    sleep 1
+  end
+end
+
+# --- Melody or lead synth (optional) ---
+if false  # Set to true to enable the lead synth
+  live_loop :lead do
+    use_synth :saw
+    play (scale :e3, :minor_pentatonic).choose, release: 0.2, cutoff: rrand(70, 130)
+    sleep 0.5
+  end
+end

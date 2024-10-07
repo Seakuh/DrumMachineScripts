@@ -1,0 +1,22 @@
+# Welcome to Sonic Pi
+
+# Speed up the sound
+use_bpm 120  # Set the BPM to 120, change this value to speed up or slow down
+
+# Generate sound using a specific frequency
+live_loop :hz_sound do
+  play hz_to_midi(440), release: 0.5  # Convert 440 Hz to MIDI pitch and play
+  sleep 0.5
+end
+
+# Add a clap sound
+#live_loop :clap do
+#  sample :perc_snap, amp: 1.5  # Sample of a clap sound, adjust amp for loudness
+#  sleep 1
+#end
+
+# Add hi-hats
+live_loop :hihats do
+  sample :drum_cymbal_closed, amp: 0.8, rate: 1.5  # Adjust rate for faster hi-hats
+  sleep 0.25  # Play every quarter beat
+end

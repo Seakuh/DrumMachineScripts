@@ -1,0 +1,92 @@
+# Welcome to Sonic Pi
+
+# Speed up the sound
+use_bpm 125  # Set the BPM to 125, adjust this value to speed up or slow down
+
+# --- Generate sound using a specific frequency ---
+if false  # Set to true to enable the frequency sound
+  live_loop :hz_sound do
+    play hz_to_midi(440), release: 0.5  # Convert 440 Hz to MIDI pitch and play
+    sleep 0.5
+  end
+end
+
+# --- Kick drum pattern ---
+live_loop :kick do
+  sample :bd_808, amp: 2  # A nice techno kick drum
+  sleep 0.5  # Plays on every beat
+end
+
+# --- Clap pattern ---
+live_loop :clap do
+  sleep 1  # Wait for one beat before starting clap
+  sample :perc_snap, amp: 1.5  # Use a clap sound
+  sleep 1  # Plays on every second beat
+end
+
+# --- Closed hi-hats pattern ---
+live_loop :closed_hihat do
+  sleep 0.25  # Hi-hats on every quarter beat
+  sample :drum_cymbal_closed, amp: 0.8, rate: 1.5  # Closed hi-hat
+end
+
+# --- hi-hat ---
+if false  # Set to false to disable this section
+  sample :bd_tek
+  sleep 1
+end
+
+# --- Open hi-hat pattern ---
+if false  # Set to true to enable the open hi-hat sound
+  live_loop :open_hihat do
+    sleep 0.75  # Wait before starting open hi-hats
+    sample :drum_cymbal_open, amp: 0.6, attack: 0.01, sustain: 0.1, release: 0.1  # Open hi-hat with short duration
+    sleep 0.25  # Play on every 4th beat
+  end
+end
+
+# --- Deep and wide bassline ---
+# Wide bassline using stereo panning and deep frequency
+if false  # Set to false to disable the bassline
+  live_loop :deep_bassline do
+    use_synth :tb303  # A synth with a deep and resonant sound
+    play :e1, release: 0.6, cutoff: 60, res: 0.9, amp: 2, pan: -0.5  # Left side
+    sleep 0.5
+    play :e1, release: 0.6, cutoff: 60, res: 0.9, amp: 2, pan: 0.5  # Right side
+    sleep 0.5
+  end
+end
+
+# --- Bassline alternative (commented out) ---
+if false  # Set to true to use this bassline alternative
+  live_loop :bassline do
+    use_synth :fm  # Frequency modulation synth
+    play :e2, release: 0.2, cutoff: 80  # Low note for bassline
+    sleep 0.5
+  end
+end
+
+# --- Bassline Change Takt ---
+live_loop :deep_bassline do
+  use_synth :tb303  # Synth used for the bassline
+  play :e1, release: 0.6, cutoff: 60, res: 0.9, amp: 2, pan: -0.5  # Left side note
+  sleep 0.5  # Sleep for half a beat
+  play :e1, release: 0.6, cutoff: 60, res: 0.9, amp: 2, pan: 0.5  # Right side note
+  sleep 0.5  # Sleep for half a beat
+end
+
+# --- Add a clap sound (commented out) ---
+if false  # Set to true to use this clap loop
+  live_loop :extra_clap do
+    sample :perc_snap, amp: 1.5  # Sample of a clap sound
+    sleep 1
+  end
+end
+
+# --- Add hi-hats (commented out) ---
+if false  # Set to true to use this hi-hat loop
+  live_loop :hihats do
+    sample :drum_cymbal_closed, amp: 0.8, rate: 1.5  # Adjust rate for faster hi-hats
+    sleep 0.25  # Play every quarter beat
+  end
+end
